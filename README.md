@@ -24,7 +24,7 @@ You may need to edit /etc/hosts and include all the node entries as the below:
 ```
 Disable SELinux as well (if you want)
 ```
-sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/configCopy
+sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
 setenforce 0
 ```
 On the ansible controll machine, 
