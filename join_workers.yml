@@ -1,0 +1,14 @@
+---
+- hosts: workers
+  tasks:
+
+  - name: Copying token to worker nodes
+    copy: src=/tmp/join_token.txt dest=/home/centos/join_token.txt
+
+  - name: Joining worker nodes with kubernetes master
+    become: true
+    shell: |
+     kubeadm reset -f
+     cat /home/centos/join_token.txt | tail -2 > out.sh
+     sh out.sh
+

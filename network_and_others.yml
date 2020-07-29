@@ -1,0 +1,45 @@
+---
+- hosts: masters 
+  tasks:
+
+  - name: Installing networking plugin (Weave)
+    shell: kubectl apply -f /home/centos/binary/weave.yml
+
+  - name: Deploying the dashboard
+    shell: kubectl apply -f /home/centos/binary/dashboard.yml
+
+  - name: Creating admin-user.yml
+    blockinfile:
+     path: /home/centos/admin-user.yml
+     create: yes
+     block: |
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: admin-user
+        namespace: kube-system
+ 
+  - name: Creating clusterRoleBinding.yml
+    blockinfile:
+     path: /home/centos/clusterRoleBinding.yml
+     create: yes
+     block: |
+      apiVersion: rbac.authorization.k8s.io/v1beta1
+      kind: ClusterRoleBinding
+      metadata:
+        name: admin-user
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+      - kind: ServiceAccount
+        name: admin-user
+        namespace: kube-system 
+
+  - name: Creating admin user 
+    shell: kubectl apply -f /home/centos/admin-user.yml
+
+  - name: Creating clusterRoleBinding
+    shell: kubectl apply -f /home/centos/clusterRoleBinding.yml
+

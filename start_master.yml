@@ -1,0 +1,18 @@
+---
+- hosts: masters 
+  tasks:
+
+  - name: Initializing Kubernetes cluster
+    become: true
+    shell: kubeadm init --kubernetes-version=v1.18.6
+    register: output
+
+  - name: Storing logs and generated token for future purpose.
+    local_action: copy content={{ output.stdout }} dest=/tmp/join_token.txt
+
+  - name: Copying required files
+    shell: |
+     mkdir -p /home/centos/.kube
+     sudo cp -f /etc/kubernetes/admin.conf /home/centos/.kube/config
+     sudo chown $(id -u):$(id -g) /home/centos/.kube/config
+
