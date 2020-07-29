@@ -30,6 +30,7 @@ setenforce 0
 On the ansible controll machine, 
 - modify the ansible.cfg file
 - modify the hosts file
+You may need to get all binary files (and yml as well) from here: https://github.com/biennt/aiok8s/tree/master/binary
 
 Run they playbook
 -----------------
