@@ -33,6 +33,8 @@ On the ansible controll machine,
 
 You may need to get all binary files (and yml as well) from here: https://github.com/biennt/aiok8s/tree/master/binary
 
+Put those files in the same directory with the playbooks
+
 Run the playbooks
 -----------------
 
